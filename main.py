@@ -90,6 +90,8 @@ class PongGame(Widget):
         self.ball1.center = (random.randint(0, 20) * self.width//20, random.randint(0, 20) * self.height // 20)
         self.ballr.pos = (self.width, random.randint(0, 20) * self.height // 20)
         self.vel = vel
+
+
     def update(self, dt):
         self.ball.move()
         self.ballr.move(self.width, self.height)
@@ -130,10 +132,12 @@ class PongGame(Widget):
                 file.close()
             #App.get_running_app().stop()
 
-            #global Rayman, sound
+            global Ray, sound
             #sound.stop()
-            #Rayman.stop()
+
             self.player1.score = 0
+
+
 
     def on_touch_move(self, touch):
         if touch.y < self.height / 3:
@@ -162,6 +166,7 @@ class RaymanApp(App):
 
     def exit(self):
         App.get_running_app().stop()
+
 
 
 
@@ -196,28 +201,19 @@ class PobApp(App):
         soundo.stop()
         Pob.stop()
 
-def Ray():
-    global Rayman
-    Rayman = RaymanApp()
-    Rayman.run()
-    #Rayman.stop()
-    main()
 def main():
-    Window.bind(on_keyboard=Android_back_click)
     #RaymanApp().run()
-    global Pob, Rayman
+    global Pob, Ray
     Pob = PobApp()
     Pob.run()
+    Pob.stop()
     del Pob
-    Ray()
+    Ray = RaymanApp()
+    Ray.run()
+    Ray.stop()
+    sound.stop()
+    del Ray
+    main()
 
-def Android_back_click(window,key,*largs):
-    try:
-        global sound, soundo, Pob, Rayman
-        sound.stop()
-        soundo.stop()
-        Pob.stop()
-        Rayman.stop()
-    except:
-        5
+
 main()
